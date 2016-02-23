@@ -1,0 +1,15 @@
+name: PlayerHide
+main: com.lawlsec.playerhide.core.PlayerHide
+version: 0.0.1
+author: Spyda6
+commands:
+   toggleplayers:
+      description: Hides or unhides other players
+      usage: /toggleplayers
+      permission: PlayerHide.TogglePlayers
+      permission-message: You don't have permission
+   toggletags:
+      description: Hides or unhides other players tags
+      usage: /toggletags
+      permission: PlayerHide.ToggleTags
+      permission-message: You don't have permission
