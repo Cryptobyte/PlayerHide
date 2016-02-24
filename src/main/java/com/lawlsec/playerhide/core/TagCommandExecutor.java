@@ -5,6 +5,8 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.scoreboard.NameTagVisibility;
+import org.bukkit.scoreboard.Team;
 
 public class TagCommandExecutor implements CommandExecutor {
 	private final PlayerHide plugin;
@@ -13,7 +15,6 @@ public class TagCommandExecutor implements CommandExecutor {
 		this.plugin = plugin;
 	}
 
-	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 		if (cmd.getName().equalsIgnoreCase("toggletags")) {
 			if (sender instanceof Player) {
@@ -21,13 +22,27 @@ public class TagCommandExecutor implements CommandExecutor {
 				
 				if (player.hasPermission("PlayerHide.ToggleTags")) {
 					if (plugin.ToggledTags.contains(player)) {
-						//Show Tags
-					
+						for (Player ps : Bukkit.getOnlinePlayers()) {
+							if (ps != player) {
+								Team team = player.getScoreboard().getPlayerTeam(ps);
+								
+								if (team.getNameTagVisibility() != NameTagVisibility.ALWAYS)
+									team.setNameTagVisibility(NameTagVisibility.ALWAYS);
+							}
+						}
+							
 						plugin.ToggledTags.remove(player);
 						player.sendMessage("Tags now unhidden!");
 					} else {
-						//Hide Tags
-					
+						for (Player ps : Bukkit.getOnlinePlayers()) {
+							if (ps != player) {
+								Team team = player.getScoreboard().getPlayerTeam(ps);
+								
+								if (team.getNameTagVisibility() != NameTagVisibility.NEVER)
+									team.setNameTagVisibility(NameTagVisibility.NEVER);
+							}
+						}
+						
 						plugin.ToggledTags.add(player);
 						player.sendMessage("Tags now hidden!");
 					}

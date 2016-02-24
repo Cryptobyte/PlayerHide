@@ -13,7 +13,6 @@ public class PlayerCommandExecutor implements CommandExecutor {
 		this.plugin = plugin;
 	}
 
-	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
 		if (cmd.getName().equalsIgnoreCase("toggleplayers")) {
 			if (sender instanceof Player) {
@@ -21,15 +20,17 @@ public class PlayerCommandExecutor implements CommandExecutor {
 				
 				if (player.hasPermission("PlayerHide.TogglePlayers")) {
 					if (plugin.ToggledPlayers.contains(player)) {
-						for (Player ps : Bukkit.getOnlinePlayers()){
-							player.showPlayer(ps);
+						for (Player ps : Bukkit.getOnlinePlayers()) {
+							if (ps != player)
+								player.showPlayer(ps);
 						}
 					
 						plugin.ToggledPlayers.remove(player);
 						player.sendMessage("Players now unhidden!");
 					} else {
-						for (Player ps : Bukkit.getOnlinePlayers()){
-							player.hidePlayer(ps);
+						for (Player ps : Bukkit.getOnlinePlayers()) {
+							if (ps != player)
+								player.hidePlayer(ps);
 						}
 					
 						plugin.ToggledPlayers.add(player);
