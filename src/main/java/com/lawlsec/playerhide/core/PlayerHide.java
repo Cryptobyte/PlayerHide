@@ -18,12 +18,24 @@ public final class PlayerHide extends JavaPlugin implements Listener {
 	public List<Player> ToggledPlayers;
 	public List<Player> ToggledTags;
 	
+	/**
+	 * Generates a team name for the specified player 
+	 * in the format PH_PLAYERNAME to maximize compatibility
+	 * 
+	 * @param  p The player to generate the team name for
+	 * @return Generated team name string
+	 */
 	public String generateTeamName(Player p) {
 		String TeamName = String.format("PH_%s", p.getName());
 		TeamName = TeamName.length() > 16 ? TeamName.substring(0, 16) : TeamName;
 		return TeamName;
 	}
 	
+	/**
+	 * Assigns the PlayerHide team to the specified player
+	 * 
+	 * @param p The player to which we are assigning the team
+	 */
 	private void setPlayerTeam(Player p) {
 		Team team;
 		
