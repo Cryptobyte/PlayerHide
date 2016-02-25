@@ -23,7 +23,7 @@ public class TagCommandExecutor implements CommandExecutor {
 				if (plugin.ToggledTags.contains(player)) {
 					for (Player ps : Bukkit.getOnlinePlayers()) {
 						if (ps != player) {
-							Team team = player.getScoreboard().getPlayerTeam(ps);
+							Team team = player.getScoreboard().getTeam(plugin.generateTeamName(ps));
 								
 							if (team.getNameTagVisibility() != NameTagVisibility.ALWAYS)
 								team.setNameTagVisibility(NameTagVisibility.ALWAYS);
@@ -35,7 +35,7 @@ public class TagCommandExecutor implements CommandExecutor {
 				} else {
 					for (Player ps : Bukkit.getOnlinePlayers()) {
 						if (ps != player) {
-							Team team = player.getScoreboard().getPlayerTeam(ps);
+							Team team = player.getScoreboard().getTeam(plugin.generateTeamName(ps));
 								
 							if (team.getNameTagVisibility() != NameTagVisibility.NEVER)
 								team.setNameTagVisibility(NameTagVisibility.NEVER);

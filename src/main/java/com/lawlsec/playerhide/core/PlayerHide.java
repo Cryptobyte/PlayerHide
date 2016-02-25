@@ -18,6 +18,31 @@ public final class PlayerHide extends JavaPlugin implements Listener {
 	public List<Player> ToggledPlayers;
 	public List<Player> ToggledTags;
 	
+	public String generateTeamName(Player p) {
+		String TeamName = String.format("PH_%s", p.getName());
+		TeamName = TeamName.length() > 16 ? TeamName.substring(0, 16) : TeamName;
+		return TeamName;
+	}
+	
+	private void setPlayerTeam(Player p) {
+		Team team;
+		
+		String TeamName = generateTeamName(p);
+		
+		if (p.getScoreboard() == null) {
+			ScoreboardManager manager = Bukkit.getScoreboardManager();
+			Scoreboard board = manager.getNewScoreboard();
+			team = board.registerNewTeam(TeamName);
+		} else {
+			if (p.getScoreboard().getTeam(TeamName) == null)
+				team = p.getScoreboard().registerNewTeam(TeamName);
+			else
+				team = p.getScoreboard().getTeam(TeamName);
+		}
+		
+		team.addPlayer(p);
+	}
+	
 	@Override
 	public void onEnable() {
 		ToggledPlayers = new ArrayList<Player>();
@@ -29,10 +54,7 @@ public final class PlayerHide extends JavaPlugin implements Listener {
 		this.getCommand("toggletags").setExecutor(new TagCommandExecutor(this));
 		
 		for (Player ps : Bukkit.getOnlinePlayers()){
-			ScoreboardManager manager = Bukkit.getScoreboardManager();
-			Scoreboard board = manager.getNewScoreboard();
-			Team team = board.registerNewTeam(ps.getName());
-			team.addPlayer(ps);
+			setPlayerTeam(ps);
 		}
 	}
 	
@@ -40,10 +62,7 @@ public final class PlayerHide extends JavaPlugin implements Listener {
 	public void onPlayerJoin(PlayerJoinEvent event) {
 		Player player = event.getPlayer();
 		
-		ScoreboardManager manager = Bukkit.getScoreboardManager();
-		Scoreboard board = manager.getNewScoreboard();
-		Team team = board.registerNewTeam(player.getName());
-		team.addPlayer(player);
+		setPlayerTeam(player);
 		
 		for (Player ps : ToggledPlayers){
 			ps.hidePlayer(player);
