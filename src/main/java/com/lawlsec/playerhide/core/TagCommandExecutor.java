@@ -16,42 +16,40 @@ public class TagCommandExecutor implements CommandExecutor {
 	}
 
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-		if (cmd.getName().equalsIgnoreCase("toggletags")) {
-			if (sender instanceof Player) {
-				Player player = (Player) sender;
+		if (sender instanceof Player) {
+			Player player = (Player) sender;
 				
-				if (player.hasPermission("PlayerHide.ToggleTags")) {
-					if (plugin.ToggledTags.contains(player)) {
-						for (Player ps : Bukkit.getOnlinePlayers()) {
-							if (ps != player) {
-								Team team = player.getScoreboard().getPlayerTeam(ps);
+			if (player.hasPermission("PlayerHide.ToggleTags")) {
+				if (plugin.ToggledTags.contains(player)) {
+					for (Player ps : Bukkit.getOnlinePlayers()) {
+						if (ps != player) {
+							Team team = player.getScoreboard().getPlayerTeam(ps);
 								
-								if (team.getNameTagVisibility() != NameTagVisibility.ALWAYS)
-									team.setNameTagVisibility(NameTagVisibility.ALWAYS);
-							}
+							if (team.getNameTagVisibility() != NameTagVisibility.ALWAYS)
+								team.setNameTagVisibility(NameTagVisibility.ALWAYS);
 						}
-							
-						plugin.ToggledTags.remove(player);
-						player.sendMessage("Tags now unhidden!");
-					} else {
-						for (Player ps : Bukkit.getOnlinePlayers()) {
-							if (ps != player) {
-								Team team = player.getScoreboard().getPlayerTeam(ps);
-								
-								if (team.getNameTagVisibility() != NameTagVisibility.NEVER)
-									team.setNameTagVisibility(NameTagVisibility.NEVER);
-							}
-						}
-						
-						plugin.ToggledTags.add(player);
-						player.sendMessage("Tags now hidden!");
 					}
+							
+					plugin.ToggledTags.remove(player);
+					player.sendMessage("Tags now unhidden!");
+				} else {
+					for (Player ps : Bukkit.getOnlinePlayers()) {
+						if (ps != player) {
+							Team team = player.getScoreboard().getPlayerTeam(ps);
+								
+							if (team.getNameTagVisibility() != NameTagVisibility.NEVER)
+								team.setNameTagVisibility(NameTagVisibility.NEVER);
+						}
+					}
+						
+					plugin.ToggledTags.add(player);
+					player.sendMessage("Tags now hidden!");
 				}
+			}
 				
-				return true;
+			return true;
 				
-			} else sender.sendMessage("Tags can only be toggled by a player.");
-		}
+		} else sender.sendMessage("Tags can only be toggled by a player.");
 		
 		return false;
 	}

@@ -14,34 +14,32 @@ public class PlayerCommandExecutor implements CommandExecutor {
 	}
 
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-		if (cmd.getName().equalsIgnoreCase("toggleplayers")) {
-			if (sender instanceof Player) {
-				Player player = (Player) sender;
+		if (sender instanceof Player) {
+			Player player = (Player) sender;
 				
-				if (player.hasPermission("PlayerHide.TogglePlayers")) {
-					if (plugin.ToggledPlayers.contains(player)) {
-						for (Player ps : Bukkit.getOnlinePlayers()) {
-							if (ps != player)
+			if (player.hasPermission("PlayerHide.TogglePlayers")) {
+				if (plugin.ToggledPlayers.contains(player)) {
+					for (Player ps : Bukkit.getOnlinePlayers()) {
+						if (ps != player)
 								player.showPlayer(ps);
-						}
-					
-						plugin.ToggledPlayers.remove(player);
-						player.sendMessage("Players now unhidden!");
-					} else {
-						for (Player ps : Bukkit.getOnlinePlayers()) {
-							if (ps != player)
-								player.hidePlayer(ps);
-						}
-					
-						plugin.ToggledPlayers.add(player);
-						player.sendMessage("Players now hidden!");
 					}
+					
+					plugin.ToggledPlayers.remove(player);
+					player.sendMessage("Players now unhidden!");
+				} else {
+					for (Player ps : Bukkit.getOnlinePlayers()) {
+						if (ps != player)
+							player.hidePlayer(ps);
+					}
+					
+					plugin.ToggledPlayers.add(player);
+					player.sendMessage("Players now hidden!");
 				}
+			}
 				
-				return true;
+			return true;
 				
-			} else sender.sendMessage("Players can only be toggled by a player.");
-		}
+		} else sender.sendMessage("Players can only be toggled by a player.");
 		
 		return false;
 	}
