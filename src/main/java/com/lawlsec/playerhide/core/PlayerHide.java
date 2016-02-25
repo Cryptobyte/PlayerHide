@@ -40,7 +40,7 @@ public final class PlayerHide extends JavaPlugin implements Listener {
 				team = p.getScoreboard().getTeam(TeamName);
 		}
 		
-		team.addPlayer(p);
+		team.addEntry(p.getName());
 	}
 	
 	@Override
