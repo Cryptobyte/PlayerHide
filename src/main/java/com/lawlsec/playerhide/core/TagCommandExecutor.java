@@ -49,7 +49,9 @@ public class TagCommandExecutor implements CommandExecutor {
 				
 			return true;
 				
-		} else sender.sendMessage("Tags can only be toggled by a player.");
+		}
+		
+		sender.sendMessage("Tags can only be toggled by a player.");
 		
 		return false;
 	}

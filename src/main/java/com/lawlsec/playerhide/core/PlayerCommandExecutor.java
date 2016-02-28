@@ -39,7 +39,9 @@ public class PlayerCommandExecutor implements CommandExecutor {
 				
 			return true;
 				
-		} else sender.sendMessage("Players can only be toggled by a player.");
+		}
+		
+		sender.sendMessage("Players can only be toggled by a player.");
 		
 		return false;
 	}
