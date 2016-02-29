@@ -41,12 +41,12 @@ public final class PlayerHide extends JavaPlugin implements Listener {
 		
 		String TeamName = generateTeamName(p);
 		
-		if (p.getScoreboard() == null) {
+		if (p.getScoreboard().equals(null)) {
 			ScoreboardManager manager = Bukkit.getScoreboardManager();
 			Scoreboard board = manager.getNewScoreboard();
 			team = board.registerNewTeam(TeamName);
 		} else {
-			if (p.getScoreboard().getTeam(TeamName) == null)
+			if (p.getScoreboard().getTeam(TeamName).equals(null))
 				team = p.getScoreboard().registerNewTeam(TeamName);
 			else
 				team = p.getScoreboard().getTeam(TeamName);
